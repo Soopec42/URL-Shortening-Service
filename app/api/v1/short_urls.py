@@ -66,6 +66,37 @@ async def update_short_url(
     return dto.to_response()
 
 
+@router.delete(
+    "/{short_code}",
+    status_code=status.HTTP_204_NO_CONTENT,
+    summary="Delete Short URL",
+)
+async def delete_short_url(
+    short_code: str,
+    db: AsyncSession = Depends(get_db),
+) -> Response:
+    try:
+        await _service.delete(db, short_code)
+    except NotFoundError as exc:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(exc))
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+
+@router.get(
+    "/{short_code}/stats",
+    response_model=ShortUrlStatsResponse,
+    status_code=status.HTTP_200_OK,
+    summary="Get URL Statistics",
+)
+async def get_short_url_stats(
+    short_code: str,
+    db: AsyncSession = Depends(get_db),
+) -> ShortUrlStatsResponse:
+    try:
+        dto = await _service.get_stats(db, short_code)
+    except NotFoundError as exc:
+        return HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(exc))
+    return dto.to_response()
 
 
 
