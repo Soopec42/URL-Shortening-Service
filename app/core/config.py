@@ -24,6 +24,6 @@ class Setting(BaseSettings):
         return self.app_env == "testing"
 
 @lru_cache
-def get_setting(self) -> Setting:
+def get_setting() -> Setting:
     return Setting()
 

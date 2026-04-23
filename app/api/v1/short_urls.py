@@ -10,7 +10,7 @@ from app.schemas.short_url import (
 )
 from app.services.url_shortener import UrlShortenerService
 
-router = APIRouter("/shorten/", tags=["short"])
+router = APIRouter(prefix="/shorten", tags=["Short URLs"])
 
 _service = UrlShortenerService()
 

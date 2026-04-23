@@ -79,7 +79,7 @@ class UrlShortenerService:
         return ShortUrlDTO.model_validate(obj)
 
 
-    async def delete(self, session: AsyncSession, short_code: str) -> None
+    async def delete(self, session: AsyncSession, short_code: str) -> None:
         obj = await self._get_by_code(session, short_code)
         await session.delete(obj)
         await session.flush()
