@@ -1,9 +1,9 @@
 import uvicorn
 
-from app.core.config import get_settings
+from app.core.config import get_setting
 
 if __name__ == "__main__":
-    settings = get_settings()
+    settings = get_setting()
     uvicorn.run(
         "app.main:app",
         host=settings.app_host,
