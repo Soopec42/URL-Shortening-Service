@@ -6,14 +6,14 @@ from sqlalchemy import pool
 from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
-from app.core.config import get_settings
+from app.core.config import get_setting
 from app.db.session import Base
 
 # Alembic Config object
 config = context.config
 
 # Override sqlalchemy.url from application settings so a single source of truth
-settings = get_settings()
+settings = get_setting()
 config.set_main_option("sqlalchemy.url", settings.database_url)
 
 if config.config_file_name is not None:
