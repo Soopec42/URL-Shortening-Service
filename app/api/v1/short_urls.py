@@ -44,7 +44,7 @@ async def get_short_url(
     try:
         dto = await _service.get_by_code(db, short_code)
     except NotFoundError as exc:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(exc))
     return dto.to_response()
 
 
@@ -95,8 +95,8 @@ async def get_short_url_stats(
     try:
         dto = await _service.get_stats(db, short_code)
     except NotFoundError as exc:
-        return HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(exc))
-    return dto.to_response()
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(exc))
+    return dto.to_stats_response()
 
 
 

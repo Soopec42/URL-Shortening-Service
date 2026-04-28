@@ -26,7 +26,7 @@ class UrlShortenerService:
 
     async def _get_by_code(self, session: AsyncSession, short_code: str) -> ShortUrl:
         result = await session.execute(
-            select(ShortUrl).where(ShortUrl.shortCode == short_code)
+            select(ShortUrl).where(ShortUrl.short_code == short_code)
         )
         obj = result.scalar_one_or_none()
         if obj is None:
@@ -38,7 +38,7 @@ class UrlShortenerService:
         for _ in range(_MAX_RETRIES):
             code = _generate_short_code(length)
             result = await session.execute(
-                select(ShortUrl.id).where(ShortUrl.shortCode == code)
+                select(ShortUrl.id).where(ShortUrl.short_code == code)
             )
             if result.scalar_one_or_none() is None:
                 return code
